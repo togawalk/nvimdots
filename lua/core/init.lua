@@ -3,6 +3,8 @@ local g = vim.g
 
 
 opt.clipboard = "unnamedplus"
+opt.cursorline = true
+opt.cursorlineopt = "number"
 
 -- Indenting
 opt.expandtab = true
