@@ -1,14 +1,28 @@
 local default_plugins = {
 
+	-- Colorschemes
 	{
-		"nvim-tree/nvim-tree.lua",
-		config = true,
+		"folke/tokyonight.nvim",
 	},
 
 	{
 		"catppuccin/nvim",
 		name = "catppuccin",
 		priority = 1000,
+		config = function()
+			require("catppuccin").setup({
+				custom_highlights = function(colors)
+					return {
+						NvimTreeFolderArrowOpen = { fg = colors.surface1 },
+						NvimTreeFolderArrowClosed = { fg = colors.surface1 },
+					}
+				end,
+			})
+		end,
+	},
+
+	{
+		"nvim-tree/nvim-web-devicons",
 	},
 
 	{
@@ -46,6 +60,29 @@ local default_plugins = {
 			--   `nvim-notify` is only needed, if you want to use the notification view.
 			--   If not available, we use `mini` as the fallback
 			"rcarriga/nvim-notify",
+		},
+	},
+
+	-- file managing , picker etc
+	{
+		"nvim-tree/nvim-tree.lua",
+		cmd = { "NvimTreeToggle", "NvimTreeFocus" },
+		opts = function()
+			return require("plugins.configs.nvimtree")
+		end,
+	},
+
+	{
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		init = function()
+			vim.o.timeout = true
+			vim.o.timeoutlen = 300
+		end,
+		opts = {
+			-- your configuration comes here
+			-- or leave it empty to use the default settings
+			-- refer to the configuration section below
 		},
 	},
 }

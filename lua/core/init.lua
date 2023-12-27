@@ -36,4 +36,4 @@ opt.updatetime = 250
 opt.whichwrap:append("<>[]hl")
 
 -- nnoremap <SPACE> <Nop>
--- g.mapleader = " "
+g.mapleader = " "
