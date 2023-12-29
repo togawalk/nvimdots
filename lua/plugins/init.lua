@@ -123,6 +123,13 @@ local default_plugins = {
 			-- refer to the configuration section below
 		},
 	},
+
+	{
+		"togawalk/relative-toggle.nvim",
+		opts = {
+			relativenumber = true,
+		},
+	},
 }
 
 require("lazy").setup(default_plugins)
