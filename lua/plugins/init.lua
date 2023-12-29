@@ -47,11 +47,15 @@ local default_plugins = {
 				sections = {
 					lualine_a = { "mode" },
 					lualine_b = { "filename" },
-					lualine_c = { { "branch", icon = ' '}, "diff", "diagnostics" },
-					lualine_x = { "encoding", { "fileformat", icons_enabled = false }, {
-						"filetype",
-						icons_enabled = false,
-					} },
+					lualine_c = { { "branch", icon = " " }, "diff", "diagnostics" },
+					lualine_x = {
+						"encoding",
+						{ "fileformat", icons_enabled = false },
+						{
+							"filetype",
+							icons_enabled = false,
+						},
+					},
 					lualine_y = {},
 					lualine_z = { "progress" },
 				},
