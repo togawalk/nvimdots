@@ -1,6 +1,7 @@
 {
   "catppuccin": { "branch": "main", "commit": "4fbab1f01488718c3d54034a473d0346346b90e3" },
   "cyberpunk": { "branch": "master", "commit": "2c009b8451732d8e9742fe354c134f6a34b41f92" },
+  "gitsigns.nvim": { "branch": "main", "commit": "d195f0c35ced5174d3ecce1c4c8ebb3b5bc23fa9" },
   "glow.nvim": { "branch": "main", "commit": "238070a686c1da3bccccf1079700eb4b5e19aea4" },
   "indent-blankline.nvim": { "branch": "master", "commit": "5da5546947f3125dfd6aa85ab21074dc83f776d5" },
   "lazy.nvim": { "branch": "main", "commit": "96584866b9c5e998cbae300594d0ccfd0c464627" },

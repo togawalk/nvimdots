@@ -1,6 +1,12 @@
 local default_plugins = {
 
-	-- Colorschemes
+	{
+		"lewis6991/gitsigns.nvim",
+		config = function()
+			require("gitsigns").setup()
+		end,
+	},
+
 	{
 		"folke/tokyonight.nvim",
 	},
