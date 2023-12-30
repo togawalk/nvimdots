@@ -35,6 +35,7 @@ local default_plugins = {
 		priority = 1000,
 		config = function()
 			require("catppuccin").setup({
+				transparent_background = true,
 				custom_highlights = function(colors)
 					return {
 						NvimTreeFolderArrowOpen = { fg = colors.surface1 },
@@ -128,8 +129,9 @@ local default_plugins = {
 		},
 	},
 
-  { 'rose-pine/neovim', name = 'rose-pine' },
-  { 'raddari/last-color.nvim' },
+	{ "rose-pine/neovim", name = "rose-pine" },
+	{ "raddari/last-color.nvim" },
+	{ "rebelot/kanagawa.nvim" },
 }
 
 require("lazy").setup(default_plugins)
