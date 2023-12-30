@@ -2,29 +2,18 @@ local default_plugins = {
 
 	{
 		"folke/zen-mode.nvim",
+		opts = function()
+			return require("plugins.configs.zenmode")
+		end,
+	},
+
+	{
+		"ellisonleao/gruvbox.nvim",
+		priority = 1000,
+		config = true,
 		opts = {
-			window = {
-				options = {
-					number = false, -- disable number column
-					relativenumber = false, -- disable relative numbers
-				},
-			},
-			plugins = {
-				options = {
-					enabled = true,
-          -- you may turn on/off statusline in zen mode by setting 'laststatus' 
-          -- statusline will be shown only if 'laststatus' == 3
-          laststatus = 0, -- turn off the statusline in zen mode
-				},
-				gitsigns = { enabled = false }, -- disables git signs
-				-- this will change the font size on kitty when in zen mode
-				-- to make this work, you need to set the following kitty options:
-				-- - allow_remote_control socket-only
-				-- - listen_on unix:/tmp/kitty
-				kitty = {
-					enabled = true,
-					font = "+4", -- font size increment
-				},
+			overrides = {
+				SignColumn = { bg = "#282828" },
 			},
 		},
 	},
@@ -59,46 +48,8 @@ local default_plugins = {
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
-
 		config = function()
-			require("lualine").setup({
-				options = {
-					icons_enabled = true,
-					theme = "auto",
-					component_separators = { left = "", right = "" },
-					section_separators = { left = "", right = "" },
-					disabled_filetypes = {
-						--"NvimTree",
-					},
-					ignore_focus = {},
-					always_divide_middle = true,
-					globalstatus = true,
-					refresh = {
-						statusline = 1000,
-						tabline = 1000,
-						winbar = 1000,
-					},
-				},
-				sections = {
-					lualine_a = { "mode" },
-					lualine_b = { "filename" },
-					lualine_c = { { "branch", icon = " " }, "diff", "diagnostics" },
-					lualine_x = {
-						"encoding",
-						{ "fileformat", icons_enabled = false },
-						{
-							"filetype",
-							icons_enabled = false,
-						},
-					},
-					lualine_y = {},
-					lualine_z = { "progress" },
-				},
-				tabline = {},
-				winbar = {},
-				inactive_winbar = {},
-				extensions = {},
-			})
+			require("plugins.configs.lualine")
 		end,
 	},
 
@@ -110,6 +61,13 @@ local default_plugins = {
 
 	{
 		"RRethy/vim-illuminate",
+		config = function()
+			require("illuminate").configure({
+				filetypes_denylist = {
+					"NvimTree",
+				},
+			})
+		end,
 	},
 
 	{
