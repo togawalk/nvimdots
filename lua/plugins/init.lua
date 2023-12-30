@@ -127,6 +127,9 @@ local default_plugins = {
 			relativenumber = true,
 		},
 	},
+
+  { 'rose-pine/neovim', name = 'rose-pine' },
+  { 'raddari/last-color.nvim' },
 }
 
 require("lazy").setup(default_plugins)
