@@ -1,4 +1,9 @@
 local options = {
+	filters = {
+		dotfiles = false,
+		custom = { "node_modules", ".git" },
+		exclude = { ".github" },
+	},
 	view = {
 		adaptive_size = false,
 		side = "right",
