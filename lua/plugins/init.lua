@@ -23,6 +23,7 @@ local default_plugins = {
 					"markdown",
 					"markdown_inline",
 					"css",
+					"ruby",
 				},
 				sync_install = false,
 				highlight = { enable = true },
@@ -81,7 +82,7 @@ local default_plugins = {
 		priority = 1000,
 		config = function()
 			require("catppuccin").setup({
-				transparent_background = true,
+				--transparent_background = true,
 				custom_highlights = function(colors)
 					return {
 						NvimTreeFolderArrowOpen = { fg = colors.surface1 },
