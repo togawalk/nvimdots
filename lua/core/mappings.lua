@@ -13,3 +13,7 @@ vim.keymap.set("", "<up>", "<cmd>echo 'Use hjkl, bro' <CR>")
 vim.keymap.set("", "<down>", "<cmd>echo 'Use hjkl, bro' <CR>")
 vim.keymap.set("", "<left>", "<cmd>echo 'Use hjkl, bro' <CR>")
 vim.keymap.set("", "<right>", "<cmd>echo 'Use hjkl, bro' <CR>")
+
+vim.keymap.set("n", "<leader>fm", function()
+	vim.lsp.buf.format({ async = true })
+end, { desc = "LSP formatting" })

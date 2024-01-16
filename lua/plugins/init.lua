@@ -1,6 +1,190 @@
 local default_plugins = {
 
 	{
+		"goolord/alpha-nvim",
+		config = function()
+			require("alpha").setup(require("alpha.themes.dashboard").config)
+		end,
+	},
+
+	{
+		"williamboman/mason.nvim",
+		dependencies = {
+			"williamboman/mason-lspconfig.nvim",
+			"WhoIsSethDaniel/mason-tool-installer.nvim",
+		},
+		config = function()
+			-- import mason
+			local mason = require("mason")
+
+			-- import mason-lspconfig
+			local mason_lspconfig = require("mason-lspconfig")
+
+			local mason_tool_installer = require("mason-tool-installer")
+
+			-- enable mason and configure icons
+			mason.setup({
+				ui = {
+					icons = {
+						package_pending = " ",
+						package_installed = " ",
+						-- package_uninstalled = " ",
+						package_uninstalled = "󰚌 ",
+					},
+				},
+			})
+
+			mason_lspconfig.setup({
+				-- list of servers for mason to install
+				ensure_installed = {
+					"tsserver",
+					"html",
+					"cssls",
+					"tailwindcss",
+					"svelte",
+					"lua_ls",
+					"emmet_ls",
+					"prismals",
+					"pyright",
+				},
+				-- auto-install configured servers (with lspconfig)
+				automatic_installation = true, -- not the same as ensure_installed
+			})
+
+			mason_tool_installer.setup({
+				ensure_installed = {
+					"prettier", -- prettier formatter
+					"stylua", -- lua formatter
+					"isort", -- python formatter
+					"black", -- python formatter
+					"pylint", -- python linter
+					"eslint_d", -- js linter
+				},
+			})
+		end,
+	},
+
+	{
+		"nvim-lua/plenary.nvim",
+	},
+
+	{
+		"neovim/nvim-lspconfig",
+		event = { "BufReadPre", "BufNewFile" },
+		config = function()
+			-- import lspconfig plugin
+			local lspconfig = require("lspconfig")
+
+			local keymap = vim.keymap -- for conciseness
+			vim.lsp.handlers["textDocument/publishDiagnostics"] =
+				vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+					virtual_text = false,
+				})
+
+			local opts = { noremap = true, silent = true }
+			local on_attach = function(client, bufnr)
+				opts.buffer = bufnr
+
+				-- set keybinds
+				opts.desc = "Smart rename"
+				keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
+
+				opts.desc = "Show line diagnostics"
+				keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
+
+				opts.desc = "Go to previous diagnostic"
+				keymap.set("n", "[d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
+
+				opts.desc = "Go to next diagnostic"
+				keymap.set("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
+
+				opts.desc = "Show documentation for what is under cursor"
+				keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
+
+				opts.desc = "Restart LSP"
+				keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+			end
+
+			-- Change the Diagnostic symbols in the sign column (gutter)
+			-- (not in youtube nvim video)
+			local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
+			for type, icon in pairs(signs) do
+				local hl = "DiagnosticSign" .. type
+				vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+			end
+
+			-- configure html server
+			lspconfig["html"].setup({
+				capabilities = capabilities,
+				on_attach = on_attach,
+			})
+
+			-- configure typescript server with plugin
+			lspconfig["tsserver"].setup({
+				capabilities = capabilities,
+				on_attach = on_attach,
+			})
+
+			-- configure css server
+			lspconfig["cssls"].setup({
+				capabilities = capabilities,
+				on_attach = on_attach,
+				settings = {
+					css = { validate = true, lint = {
+						unknownAtRules = "ignore",
+					} },
+					scss = { validate = true, lint = {
+						unknownAtRules = "ignore",
+					} },
+					less = { validate = true, lint = {
+						unknownAtRules = "ignore",
+					} },
+				},
+			})
+
+			-- configure tailwindcss server
+			lspconfig["tailwindcss"].setup({
+				capabilities = capabilities,
+				on_attach = on_attach,
+			})
+
+			-- configure emmet language server
+			lspconfig["emmet_ls"].setup({
+				capabilities = capabilities,
+				on_attach = on_attach,
+				filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
+			})
+
+			-- configure python server
+			lspconfig["pyright"].setup({
+				capabilities = capabilities,
+				on_attach = on_attach,
+			})
+
+			-- configure lua server (with special settings)
+			lspconfig["lua_ls"].setup({
+				capabilities = capabilities,
+				on_attach = on_attach,
+				settings = { -- custom settings for lua
+					Lua = {
+						-- make the language server recognize "vim" global
+						diagnostics = {
+							globals = { "vim" },
+						},
+						workspace = {
+							-- make language server aware of runtime files
+							library = {
+								[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+								[vim.fn.stdpath("config") .. "/lua"] = true,
+							},
+						},
+					},
+				},
+			})
+		end,
+	},
+
+	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
 		cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
@@ -104,7 +288,12 @@ local default_plugins = {
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		main = "ibl",
-		opts = {},
+		opts = {
+
+			exclude = {
+				filetypes = { "dashboard", "lazy", "neo-tree" },
+			},
+		},
 	},
 
 	{
