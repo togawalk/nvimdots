@@ -193,15 +193,24 @@ local default_plugins = {
 				capabilities = capabilities,
 				on_attach = on_attach,
 				settings = {
-					css = { validate = true, lint = {
-						unknownAtRules = "ignore",
-					} },
-					scss = { validate = true, lint = {
-						unknownAtRules = "ignore",
-					} },
-					less = { validate = true, lint = {
-						unknownAtRules = "ignore",
-					} },
+					css = {
+						validate = true,
+						lint = {
+							unknownAtRules = "ignore",
+						},
+					},
+					scss = {
+						validate = true,
+						lint = {
+							unknownAtRules = "ignore",
+						},
+					},
+					less = {
+						validate = true,
+						lint = {
+							unknownAtRules = "ignore",
+						},
+					},
 				},
 			})
 
