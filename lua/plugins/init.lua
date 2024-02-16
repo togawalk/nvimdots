@@ -239,6 +239,7 @@ local default_plugins = {
 
 	{
 		"numToStr/Comment.nvim",
+		dependencies = { "JoosepAlviste/nvim-ts-context-commentstring" },
 		keys = {
 			{ "gcc", mode = "n", desc = "Comment toggle current line" },
 			{ "gc", mode = { "n", "o" }, desc = "Comment toggle linewise" },
@@ -248,14 +249,9 @@ local default_plugins = {
 			{ "gb", mode = "x", desc = "Comment toggle blockwise (visual)" },
 		},
 		config = function()
-			require("Comment").setup()
-		end,
-	},
-
-	{
-		"folke/zen-mode.nvim",
-		opts = function()
-			return require("plugins.configs.zenmode")
+			require("Comment").setup({
+				pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
+			})
 		end,
 	},
 
